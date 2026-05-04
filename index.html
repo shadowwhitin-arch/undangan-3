@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-size: cover;
+      background-position: center;
+      color: #333;
+      text-align: center;
+    }.overlay {
+  background: rgba(255,255,255,0.85);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h1, h2, h3 { margin: 10px 0; }
+
+.section {
+  margin: 40px 0;
+  animation: fadeIn 1.5s ease;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: #7aa6c2;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+input, select {
+  padding: 10px;
+  width: 80%;
+  margin: 5px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+iframe {
+  width: 90%;
+  height: 300px;
+  border: 0;
+  border-radius: 10px;
+}
+
+.qr {
+  width: 150px;
+  margin-top: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+  </style>
+</head><body>
+  <div class="overlay"><!-- OPENING -->
+<div class="section">
+  <h2>💍 Undangan Pernikahan</h2>
+  <h1 id="nama">ASEP ILYAS & AI SITI RAHMAWATI</h1>
+  <button onclick="playMusic()">Buka Undangan</button>
+</div>
+
+<!-- DOA -->
+<div class="section">
+  <p>
+    "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan pasangan-pasangan untukmu..."
+  </p>
+</div>
+
+<!-- DETAIL -->
+<div class="section">
+  <h2 id="tanggal">07 JUNI 2026l</h2>
+  <h3 id="jam">O8 sd selesai</h3>
+  <p id="lokasi">Lokasi Acara</p>
+</div>
+
+<!-- MAP -->
+<div class="section">
+  <h2>📍 Lokasi</h2>
+  <iframe id="maps"></iframe>
+</div>
+
+<!-- RSVP -->
+<div class="section">
+  <h2>Konfirmasi Kehadiran</h2>
+  <input type="text" id="rsvp_nama" placeholder="Nama Anda">
+  <select id="rsvp_status">
+    <option value="Hadir">Hadir</option>
+    <option value="Tidak Hadir">Tidak Hadir</option>
+  </select>
+  <br>
+  <button onclick="kirimRSVP()">Kirim</button>
+  <p id="status_kirim"></p>
+</div>
+
+<!-- QR / REKENING -->
+<div class="section">
+  <h2>💝 Amplop Digital</h2>
+  <p id="rekening"></p>
+  <img id="qr" class="qr" src="">
+</div>
+
+<!-- PENUTUP -->
+<div class="section">
+  <h2>Terima Kasih</h2>
+  <p>Merupakan suatu kehormatan bagi kami atas kehadiran Anda.</p>
+</div>
+
+  </div>  <!-- MUSIC -->  <audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>  <script>
+    // ===== CONFIG =====
+    const config = {
+      nama: "ASEP ILYAS & AI SITI RAHMAWATI",
+      tanggal: "Minggu, 07 JUNI 2026",
+      jam: "08.00 WIB sd selesai",
+      lokasi: "Gedung / Alamat",
+      maps: "https://maps.app.goo.gl/u4kurKZVnKFQcYfKA",
+      background: "background.jpg",
+      rekening: "BRI - 444401015688504 a.n ASEP ILYAS",
+      qr: "qr.png",
+      whatsapp: "628123456789" // nomor tujuan RSVP
+    }
+
+    // APPLY CONFIG
+    document.body.style.backgroundImage = `url('${config.background}')`
+    document.getElementById('nama').innerText = config.nama
+    document.getElementById('tanggal').innerText = config.tanggal
+    document.getElementById('jam').innerText = config.jam
+    document.getElementById('lokasi').innerText = config.lokasi
+    document.getElementById('rekening').innerText = config.rekening
+    document.getElementById('qr').src = config.qr
+    document.getElementById('maps').src = `https://www.google.com/maps?q=${config.maps}&output=embed`
+
+    function playMusic() {
+      document.getElementById('music').play()
+    }
+
+    function kirimRSVP() {
+      const nama = document.getElementById('rsvp_nama').value
+      const status = document.getElementById('rsvp_status').value
+
+      if (!nama) {
+        document.getElementById('status_kirim').innerText = "Isi nama dulu ya"
+        return
+      }
+
+      const pesan = `Halo, saya ${nama} menyatakan ${status} untuk undangan.`
+      const url = `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(pesan)}`
+
+      window.open(url, '_blank')
+    }
+  </script></body>
+</html>
